@@ -1,11 +1,8 @@
+import { RouterProvider } from "react-router-dom";
+import { router } from "./constants/routes";
+
 function App() {
-  return (
-    <>
-      <p className="text-red-500 font-bold text-3xl text-center">
-        Everything works
-      </p>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

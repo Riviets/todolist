@@ -29,7 +29,7 @@ const TaskCard = ({ task }: { task: Task }) => {
   const removeTask = () => removeTaskMutation.mutate();
 
   return (
-    <div className="flex justify-between py-2 md:py-4 px-4 md:px-8 items-center gap-2 md:gap-4 border-2 shadow-md border-gray-800 rounded-md">
+    <div className="flex justify-between py-2 md:py-4 px-4 md:px-6 items-center gap-2 md:gap-4 border-2 shadow-md border-gray-800 rounded-md">
       <button onClick={removeTask} className="cursor-pointer size-6 md:size-10">
         <RemoveIcon />
       </button>

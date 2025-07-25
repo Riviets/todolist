@@ -33,14 +33,28 @@ const AddTaskForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-      <input {...register("title")} type="text" className="input" />
-      <div className="min-h-[1.5rem] text-red-500">
-        {errors.title && <span>{errors.title.message}</span>}
-      </div>
+    <div className="border-1 border-zinc-700 lg:border-none p-3 lg:p-5 rounded-sm shadow-lg">
+      <p className="text-center mb-2 md:mb-4 font-semibold text-lg md:text-2xl">
+        Add task:
+      </p>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-2 max-w-[300px] md:w-full"
+      >
+        <input {...register("title")} type="text" className="input" />
+        <div className="min-h-[1.5rem] text-red-500">
+          {errors.title ? (
+            <span>{errors.title.message}</span>
+          ) : createTaskMutation.isError ? (
+            <span>Sorry, an error occured :(</span>
+          ) : (
+            ""
+          )}
+        </div>
 
-      <button className="btn">Add Task</button>
-    </form>
+        <button className="btn">Submit</button>
+      </form>
+    </div>
   );
 };
 

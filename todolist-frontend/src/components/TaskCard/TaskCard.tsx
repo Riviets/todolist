@@ -5,9 +5,12 @@ import { TickIcon } from "../../assets/icons/tick";
 import { RemoveIcon } from "../../assets/icons/remove";
 import EditBtn from "../EditBtn";
 import { TaskContext } from "./TaskContext";
+import { useState } from "react";
+import Modal from "../modals/Modal";
 
 const TaskCard = ({ task }: { task: Task }) => {
   const queryClient = useQueryClient();
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   const toggleTaskStatusMutation = useMutation({
     mutationFn: () =>
@@ -24,6 +27,9 @@ const TaskCard = ({ task }: { task: Task }) => {
     mutationFn: () => tasksService.deleteTask(task.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+    onError: () => {
+      setIsErrorModalOpen(true);
     },
   });
 
@@ -47,10 +53,17 @@ const TaskCard = ({ task }: { task: Task }) => {
         </p>
         <button
           onClick={toggleTaskStatus}
-          className="size-6 sm:size-8 md:size-10 cursor-pointer border-2 rounded-md flex-center"
+          className="size-6 sm:size-8 md:size-10 cursor-pointer border-2 rounded-md flex-center min-w-6"
         >
           {task.completed && <TickIcon />}
         </button>
+        {isErrorModalOpen && (
+          <Modal
+            title="Error"
+            text="Sorry, an error occured"
+            closeFunction={() => setIsErrorModalOpen(false)}
+          />
+        )}
       </div>
     </TaskContext>
   );

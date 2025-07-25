@@ -30,7 +30,10 @@ const EditModal = ({ task, setIsModalOpen }: EditModalProps) => {
     mutationFn: ({ id, taskData }: { id: number; taskData: TaskInput }) => {
       return tasksService.updateTask(id, taskData);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["tasks"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      setIsModalOpen(false);
+    },
   });
 
   const onSubmit = (data: { title: string }) => {
@@ -41,7 +44,6 @@ const EditModal = ({ task, setIsModalOpen }: EditModalProps) => {
         completed: task.completed,
       },
     });
-    setIsModalOpen(false);
   };
 
   return (
@@ -54,8 +56,17 @@ const EditModal = ({ task, setIsModalOpen }: EditModalProps) => {
           <input
             {...register("title")}
             type="text"
-            className="input md:w-full mb-3 md:mb-5"
+            className="input md:w-full mb-1 md:mb-3"
           />
+          <div className="min-h-[1.5rem] mb-1 md:mb-3 text-red-500">
+            {errors.title ? (
+              <span>{errors.title.message}</span>
+            ) : editTaskMutation.isError ? (
+              <span>Sorry, an error occured :(</span>
+            ) : (
+              ""
+            )}
+          </div>
           <button className="btn">Submit</button>
         </form>
         <button

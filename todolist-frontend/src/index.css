@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .input {
+    @apply border-2 border-zinc-700 rounded-sm md:text-xl py-1 px-2 md:px-4;
+  }
+  .btn {
+    @apply border-2 border-zinc-700 rounded-sm py-2 text-xl cursor-pointer w-full;
+  }
+}

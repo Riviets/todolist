@@ -1,0 +1,59 @@
+import type { Task } from "../../types/task";
+import { tasksService } from "../../services/api/tasksService";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { TickIcon } from "../../assets/icons/tick";
+import { RemoveIcon } from "../../assets/icons/remove";
+import EditBtn from "../EditBtn";
+import { TaskContext } from "./TaskContext";
+
+const TaskCard = ({ task }: { task: Task }) => {
+  const queryClient = useQueryClient();
+
+  const toggleTaskStatusMutation = useMutation({
+    mutationFn: () =>
+      tasksService.updateTask(task.id, {
+        title: task.title,
+        completed: !task.completed,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+
+  const removeTaskMutation = useMutation({
+    mutationFn: () => tasksService.deleteTask(task.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+
+  const toggleTaskStatus = () => toggleTaskStatusMutation.mutate();
+  const removeTask = () => removeTaskMutation.mutate();
+
+  return (
+    <TaskContext value={task}>
+      <div className="flex py-2 md:py-4 px-4 md:px-6 items-center gap-2 md:gap-4 border-2 shadow-md border-gray-800 rounded-md">
+        <div className="flex gap-2 mr-2">
+          <button
+            onClick={removeTask}
+            className="size-6 sm:size-8 cursor-pointer flex-center"
+          >
+            <RemoveIcon />
+          </button>
+          <EditBtn />
+        </div>
+        <p className="text-md sm:text-lg md:text-xl font-medium mr-auto">
+          {task.title}
+        </p>
+        <button
+          onClick={toggleTaskStatus}
+          className="size-6 sm:size-8 md:size-10 cursor-pointer border-2 rounded-md flex-center"
+        >
+          {task.completed && <TickIcon />}
+        </button>
+      </div>
+    </TaskContext>
+  );
+};
+
+export default TaskCard;

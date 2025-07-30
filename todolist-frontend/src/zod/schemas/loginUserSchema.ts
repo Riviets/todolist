@@ -7,7 +7,7 @@ const loginUserSchema = z.object({
     .min(6, "Password should have at least 6 symbols")
     .max(16, "Password shouldn't be longer than 16 symbols")
     .regex(
-      /^(?=.*[a-zA-Z])(?=.*\d).+$/,
+      /^(?=.*[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ])(?=.*\d).+$/,
       "Password should contain letters and numbers"
     ),
 });

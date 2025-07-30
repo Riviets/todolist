@@ -3,8 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import loginUserSchema from "../zod/schemas/loginUserSchema";
 import type { UserLoginData } from "../types/user";
 import { authService } from "../services/api/authService";
+import { useState } from "react";
+import EyeClosedIcon from "../assets/icons/eyeClosed";
+import EyeOpenIcon from "../assets/icons/eyeOpen";
 
 const LoginForm = () => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const {
     register,
     handleSubmit,
@@ -32,7 +36,20 @@ const LoginForm = () => {
       </div>
       <div className="flex flex-col gap-1">
         <p className="text-sm md:text-base">Password:</p>
-        <input {...register("password")} type="password" className="input" />
+        <div className="relative">
+          <input
+            {...register("password")}
+            type={isPasswordVisible ? "text" : "password"}
+            className="input"
+          />
+          <button
+            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            type="button"
+            className="absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+          >
+            {isPasswordVisible ? <EyeClosedIcon /> : <EyeOpenIcon />}
+          </button>
+        </div>
         <div className="min-h-[1.5rem] text-red-500 text-sm">
           {errors.password?.message}
         </div>

@@ -10,4 +10,7 @@
   .btn {
     @apply border-2 border-zinc-700 rounded-sm py-1 text-base md:text-xl cursor-pointer w-full hover:bg-zinc-300 font-semibold transition-all duration-300;
   }
+  .bg-gradient {
+    @apply bg-gradient-to-b from-zinc-950 to-zinc-800;
+  }
 }

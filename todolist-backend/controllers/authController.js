@@ -18,7 +18,7 @@ export const registerUser = async (req, res) => {
       "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
       [username, email, hashedPassword]
     );
-    res.status(201).json({ username, email, hashedPassword });
+    res.status(201).json({ username, email });
   } catch {
     res.status(500).json({ message: "Помилка при реєстрації користувача" });
   }

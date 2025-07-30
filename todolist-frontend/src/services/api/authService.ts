@@ -1,0 +1,14 @@
+import apiClient from "./axiosInstance";
+import type { UserLoginData, UserRegisterData } from "../../types/user";
+
+export const authService = {
+  registerUser: async (userData: UserRegisterData) => {
+    const response = await apiClient.post("/users", userData);
+    return response.data;
+  },
+
+  loginUser: async (userData: UserLoginData) => {
+    const response = await apiClient.post("/users/login", userData);
+    return response.data;
+  },
+};

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import TasksList from "./TasksList";
 import AddTaskForm from "./AddTaskForm";
 import Spinner from "./utils/Spinner";
+import Button from "./buttons/Button";
 
 const Todolist = () => {
   const {
@@ -28,8 +29,9 @@ const Todolist = () => {
             </p>
           )}
         </div>
-        <div className="order-1 lg:order-2">
+        <div className="order-1 lg:order-2 flex flex-col justify-between">
           <AddTaskForm />
+          <div className="self-end">{/* <Button text="Logout" /> */}</div>
         </div>
       </div>
     </div>

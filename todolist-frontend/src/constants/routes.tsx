@@ -3,6 +3,8 @@ import TodolistPage from "../pages/TodolistPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import LoginPage from "../pages/LoginPage";
 import ProtectedRoute from "../components/utils/ProtectedRoute";
+import RegisterPage from "../pages/RegisterPage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -11,6 +13,10 @@ export const router = createBrowserRouter([
         <TodolistPage />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
   {
     path: "/login",

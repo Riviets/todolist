@@ -6,19 +6,29 @@ import { authService } from "../services/api/authService";
 import { useState } from "react";
 import EyeClosedIcon from "../assets/icons/eyeClosed";
 import EyeOpenIcon from "../assets/icons/eyeOpen";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginUserSchema), mode: "onChange" });
 
   const onSubmit = async (data: UserLoginData) => {
-    const user = await authService.loginUser(data);
-    console.log(user);
-    localStorage.setItem("user", JSON.stringify(user));
+    try {
+      const user = await authService.loginUser(data);
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/");
+    } catch {
+      setError("root.serverError", {
+        type: "400",
+        message: "Incorrect email or password!",
+      });
+    }
   };
 
   return (
@@ -51,7 +61,7 @@ const LoginForm = () => {
           </button>
         </div>
         <div className="min-h-[1.5rem] text-red-500 text-sm">
-          {errors.password?.message}
+          {errors.password?.message || errors.root?.serverError.message}
         </div>
       </div>
       <button className="btn md:max-w-[300px]">Submit</button>

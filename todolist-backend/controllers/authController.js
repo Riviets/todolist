@@ -52,3 +52,10 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Помилка при вході" });
   }
 };
+
+export const getCurrentUser = (req, res) => {
+  if (req.session.user) {
+    return res.status(200).json(req.session.user);
+  }
+  res.status(401).json({ message: "Користувач не авторизований" });
+};

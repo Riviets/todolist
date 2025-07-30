@@ -59,3 +59,14 @@ export const getCurrentUser = (req, res) => {
   }
   res.status(401).json({ message: "Користувач не авторизований" });
 };
+
+export const logoutUser = (req, res) => {
+  try {
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      res.status(200).json({ message: "Вихід успішний" });
+    });
+  } catch {
+    res.status(401).json({ message: "Не вдалося вийти" });
+  }
+};

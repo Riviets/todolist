@@ -6,3 +6,7 @@ export interface UserLoginData {
 export interface UserRegisterData extends UserLoginData {
   username: string;
 }
+
+export interface User extends UserRegisterData {
+  id: number;
+}

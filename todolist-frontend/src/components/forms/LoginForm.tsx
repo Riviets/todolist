@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import loginUserSchema from "../zod/schemas/loginUserSchema";
-import type { UserLoginData } from "../types/user";
-import { authService } from "../services/api/authService";
+import loginUserSchema from "../../zod/schemas/loginUserSchema";
+import type { UserLoginData } from "../../types/user";
+import { authService } from "../../services/api/authService";
 import { useState } from "react";
-import EyeClosedIcon from "../assets/icons/eyeClosed";
-import EyeOpenIcon from "../assets/icons/eyeOpen";
+import EyeClosedIcon from "../../assets/icons/eyeClosed";
+import EyeOpenIcon from "../../assets/icons/eyeOpen";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -72,6 +72,9 @@ const LoginForm = () => {
           Sign up
         </Link>
       </p>
+      <Link to={"/forgot-password"} className="text-purple-800">
+        Forgot password?
+      </Link>
     </form>
   );
 };

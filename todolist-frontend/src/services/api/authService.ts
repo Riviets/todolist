@@ -21,4 +21,9 @@ export const authService = {
     const response = await apiClient.post("/users/logout");
     return response.data;
   },
+
+  sendResetPasswordEmail: async (email: string) => {
+    const response = await apiClient.post("/users/forgot-password", { email });
+    return response.data;
+  },
 };

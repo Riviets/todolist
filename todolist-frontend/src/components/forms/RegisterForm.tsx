@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import registerUserSchema from "../zod/schemas/registerUserSchema";
+import registerUserSchema from "../../zod/schemas/registerUserSchema";
 import { useState } from "react";
-import EyeClosedIcon from "../assets/icons/eyeClosed";
-import EyeOpenIcon from "../assets/icons/eyeOpen";
-import { authService } from "../services/api/authService";
+import EyeClosedIcon from "../../assets/icons/eyeClosed";
+import EyeOpenIcon from "../../assets/icons/eyeOpen";
+import { authService } from "../../services/api/authService";
 import { useNavigate } from "react-router-dom";
-import type { UserRegisterData } from "../types/user";
-import Modal from "./modals/Modal";
+import type { UserRegisterData } from "../../types/user";
+import Modal from "../modals/Modal";
 import { Link } from "react-router-dom";
 
 const RegisterForm = () => {

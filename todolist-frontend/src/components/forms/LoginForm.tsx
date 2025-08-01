@@ -62,7 +62,7 @@ const LoginForm = () => {
           </button>
         </div>
         <div className="min-h-[1.5rem] text-red-500 text-sm">
-          {errors.password?.message || errors.root?.serverError.message}
+          {errors.password?.message || errors.root?.serverError.message || ""}
         </div>
       </div>
       <button className="btn md:max-w-[300px]">Submit</button>

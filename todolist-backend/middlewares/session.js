@@ -10,7 +10,7 @@ const sessMiddleware = session({
   }),
   resave: false,
   secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { secure: false },
 });
 

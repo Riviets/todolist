@@ -46,7 +46,7 @@ const RegisterForm = () => {
       <div className="flex flex-col gap-1 w-full max-w-[300px]">
         <p className="text-sm md:text-base">Username:</p>
         <input {...register("username")} type="text" className="input" />
-        <div className="min-h-[1.5rem] text-red-500 text-sm">
+        <div className="min-h-[1.5rem] text-red-500 text-sm max-w-[250px]">
           {errors.username?.message}
         </div>
       </div>
@@ -54,7 +54,7 @@ const RegisterForm = () => {
       <div className="flex flex-col gap-1 w-full max-w-[300px]">
         <p className="text-sm md:text-base">Email:</p>
         <input {...register("email")} type="text" className="input" />
-        <div className="min-h-[1.5rem] text-red-500 text-sm">
+        <div className="min-h-[1.5rem] text-red-500 text-sm max-w-[250px]">
           {errors.email?.message}
         </div>
       </div>
@@ -75,7 +75,7 @@ const RegisterForm = () => {
             {isPasswordVisible ? <EyeClosedIcon /> : <EyeOpenIcon />}
           </button>
         </div>
-        <div className="min-h-[1.5rem] text-red-500 text-sm">
+        <div className="min-h-[1.5rem] text-red-500 text-sm max-w-[220px]">
           {errors.password?.message}
         </div>
       </div>

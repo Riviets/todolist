@@ -12,7 +12,7 @@ const ResetPasswordPage = () => {
     }
   }, [navigate, searchParams]);
   return (
-    <div className="bg-gradient h-screen flex-center">
+    <div className="bg-gradient h-screen flex-center ">
       <ResetPasswordForm />
     </div>
   );

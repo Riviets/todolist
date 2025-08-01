@@ -69,7 +69,7 @@ const ResetPasswordForm = () => {
             {isPasswordVisible ? <EyeClosedIcon /> : <EyeOpenIcon />}
           </button>
         </div>
-        <div className="min-h-[1.5rem] text-red-500 text-sm">
+        <div className="min-h-[1.5rem] text-red-500 text-sm max-w-[200px]">
           {errors.password?.message}
         </div>
       </div>

@@ -20,7 +20,7 @@ const Todolist = () => {
         Task List :)
       </h1>
       <div className="grid grig-cols-1 lg:grid-cols-[7fr_3fr] gap-4 md:gap-12 h-full justify-items-center">
-        <div className="order-2 lg:order-1">
+        <div className="order-2 lg:order-1 w-full">
           {isLoading ? <Spinner /> : <TasksList tasks={tasks} />}
           {isError && (
             <p className="text-red-500 text-lg md:text-xl mt-3">

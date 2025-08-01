@@ -61,7 +61,7 @@ const LoginForm = () => {
             {isPasswordVisible ? <EyeClosedIcon /> : <EyeOpenIcon />}
           </button>
         </div>
-        <div className="min-h-[1.5rem] text-red-500 text-sm">
+        <div className="min-h-[1.5rem] text-red-500 text-sm w-full max-w-[200px] md:max-w-[250px]">
           {errors.password?.message || errors.root?.serverError.message || ""}
         </div>
       </div>

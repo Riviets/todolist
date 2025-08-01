@@ -6,6 +6,7 @@ import {
   getCurrentUser,
   logoutUser,
   sendResetPasswordEmail,
+  resetPassword,
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.post("/login", loginUser);
 router.get("/me", getCurrentUser);
 router.post("/logout", logoutUser);
 router.post("/forgot-password", sendResetPasswordEmail);
+router.post("/reset-password", resetPassword);
 
 export default router;

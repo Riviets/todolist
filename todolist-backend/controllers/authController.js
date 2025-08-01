@@ -113,9 +113,19 @@ export const sendResetPasswordEmail = async (req, res) => {
   }
 };
 
-export const resetPassword = (req, res) => {
+export const resetPassword = async (req, res) => {
   try {
-  } catch {
+    const { newPassword, token } = req.body;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await pool.query("UPDATE users SET password = $1 WHERE id = $2", [
+      hashedPassword,
+      userId,
+    ]);
+    res.status(200).json({ message: "Пароль оновлено" });
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Помилка сервера" });
   }
 };

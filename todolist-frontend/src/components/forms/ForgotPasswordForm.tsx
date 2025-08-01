@@ -4,6 +4,7 @@ import { authService } from "../../services/api/authService";
 import Modal from "../modals/Modal";
 import forgotPasswordSchema from "../../zod/schemas/forgotPasswordSchema";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ForgotPasswordForm = () => {
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
@@ -65,10 +66,13 @@ const ForgotPasswordForm = () => {
       </div>
       <button
         disabled={isSubmitting ? true : false}
-        className="btn md:max-w-[300px]"
+        className={`btn md:max-w-[300px] ${isSubmitting && "bg-gray-300"}`}
       >
         {isSubmitting ? "Hold on..." : "Confirm"}
       </button>
+      <Link to={"/login"} className="text-purple-800">
+        Back to Login
+      </Link>
       {isSuccessModalVisible && (
         <Modal
           title="Success"

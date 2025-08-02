@@ -1,9 +1,13 @@
+import Header from "../components/Header";
 import Todolist from "../components/Todolist";
 
 const TodolistPage = () => {
   return (
-    <div className="h-screen bg-gradient-to-b from-zinc-950 to-zinc-800 flex justify-center items-center py-30 px-4 md:px-8 ">
-      <Todolist />
+    <div className="min-h-screen bg-gradient flex justify-center items-center py-5 px-4 md:px-8 ">
+      <div className="flex flex-col">
+        <Header />
+        <Todolist />
+      </div>
     </div>
   );
 };

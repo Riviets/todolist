@@ -47,8 +47,8 @@ const EditModal = ({ task, setIsModalOpen }: EditModalProps) => {
   };
 
   return (
-    <div className="absolute inset-0 flex-center bg-zinc-900/70 p-5">
-      <div className="bg-white rounded-md px-6 md:px-12 py-4 md:py-8 relative">
+    <div className="fixed inset-0 flex-center bg-zinc-900/70 p-5 z-10">
+      <div className="bg-white rounded-md px-6 md:px-12 py-4 md:py-8 relative z-10">
         <p className="font-semibold text-lg md:text-2xl text-center mb-3 md:mb-5">
           Edit Task
         </p>

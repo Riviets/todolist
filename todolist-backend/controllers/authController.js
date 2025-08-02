@@ -15,6 +15,15 @@ export const getUsers = async (req, res) => {
 export const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    const isEmailRegistered = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
+    if (isEmailRegistered.rows.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "Користувач з таким email вже зареєстрований" });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     await pool.query(
       "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",

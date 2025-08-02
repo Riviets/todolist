@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import type { UserRegisterData } from "../../types/user";
 import Modal from "../modals/Modal";
 import { Link } from "react-router-dom";
+import { AxiosError } from "axios";
 
 const RegisterForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -28,11 +29,19 @@ const RegisterForm = () => {
     try {
       await authService.registerUser(data);
       setIsSuccessModalVisible(true);
-    } catch {
-      setError("root.serverError", {
-        type: "400",
-        message: "Registration failed",
-      });
+    } catch (error: any) {
+      const AxiosError = error as AxiosError;
+      if (AxiosError.response?.status === 400) {
+        setError("email", {
+          type: "400",
+          message: "Email is already registered",
+        });
+      } else {
+        setError("root.serverError", {
+          type: "500",
+          message: "Registration failed",
+        });
+      }
     }
   };
 
@@ -44,26 +53,43 @@ const RegisterForm = () => {
       <p className="text-center font-bold text-lg md:text-2xl">Register</p>
 
       <div className="flex flex-col gap-1 w-full max-w-[300px]">
-        <p className="text-sm md:text-base">Username:</p>
-        <input {...register("username")} type="text" className="input" />
+        <label htmlFor="username" className="text-sm md:text-base">
+          Username:
+        </label>
+        <input
+          {...register("username")}
+          type="text"
+          id="username"
+          className="input"
+        />
         <div className="min-h-[1.5rem] text-red-500 text-sm max-w-[250px]">
           {errors.username?.message}
         </div>
       </div>
 
       <div className="flex flex-col gap-1 w-full max-w-[300px]">
-        <p className="text-sm md:text-base">Email:</p>
-        <input {...register("email")} type="text" className="input" />
+        <label htmlFor="email" className="text-sm md:text-base">
+          Email:
+        </label>
+        <input
+          {...register("email")}
+          type="text"
+          id="email"
+          className="input"
+        />
         <div className="min-h-[1.5rem] text-red-500 text-sm max-w-[250px]">
           {errors.email?.message}
         </div>
       </div>
 
       <div className="flex flex-col gap-1 w-full max-w-[300px]">
-        <p className="text-sm md:text-base">Password:</p>
+        <label htmlFor="password" className="text-sm md:text-base">
+          Password:
+        </label>
         <div className="relative">
           <input
             {...register("password")}
+            id="password"
             type={isPasswordVisible ? "text" : "password"}
             className="input w-full"
           />

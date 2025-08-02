@@ -13,6 +13,7 @@ const AddTaskForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
     reset,
     formState: { errors },
   } = useForm<FormData>({

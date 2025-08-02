@@ -39,17 +39,27 @@ const LoginForm = () => {
     >
       <p className="text-center font-bold text-lg md:text-2xl">Login</p>
       <div className="flex flex-col gap-1">
-        <p className="text-sm md:text-base">Email:</p>
-        <input {...register("email")} type="text" className="input" />
+        <label htmlFor="email" className="text-sm md:text-base">
+          Email:
+        </label>
+        <input
+          {...register("email")}
+          type="text"
+          id="email"
+          className="input"
+        />
         <div className="min-h-[1.5rem] text-red-500 text-sm">
           {errors.email?.message}
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-sm md:text-base">Password:</p>
+        <label htmlFor="password" className="text-sm md:text-base">
+          Password:
+        </label>
         <div className="relative">
           <input
             {...register("password")}
+            id="password"
             type={isPasswordVisible ? "text" : "password"}
             className="input"
           />

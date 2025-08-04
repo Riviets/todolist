@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { inputSchema } from "../zod/schemas/inputSchema";
+import { inputSchema } from "../../zod/schemas/inputSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { tasksService } from "../services/api/tasksService";
+import { tasksService } from "../../services/api/tasksService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type FormData = {
@@ -13,6 +13,7 @@ const AddTaskForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
     reset,
     formState: { errors },
   } = useForm<FormData>({

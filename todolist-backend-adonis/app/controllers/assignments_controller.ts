@@ -1,42 +1,71 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Assignment from '#models/assignment'
+import User from '#models/user'
+import { createAssignmentValidator, updateAssignmentValidator } from '#validators/assignment'
+import { DateTime } from 'luxon'
 
 export default class AssignmentsController {
   public async index({ response }: HttpContext) {
-    const assignments = await Assignment.all()
-    return response.ok(assignments)
+    try {
+      const assignments = await Assignment.all()
+      return response.ok(assignments)
+    } catch {
+      return response.status(500).send({ message: 'Internal server error' })
+    }
   }
 
   public async store({ request, response }: HttpContext) {
-    const data = request.only(['userId', 'title', 'appointedDate'])
-    const assignment = await Assignment.create({
-      userId: data.userId,
-      title: data.title,
-      appointedDate: data.appointedDate,
-    })
-    return response.created(assignment)
+    try {
+      const payload = await createAssignmentValidator.validate(request.all())
+      const user = await User.find(payload.userId)
+      if (!user) {
+        return response.notFound({ message: 'User not found' })
+      }
+      const assignment = await Assignment.create({
+        userId: payload.userId,
+        title: payload.title,
+        appointedDate: DateTime.fromJSDate(payload.appointedDate),
+      })
+      return response.created(assignment)
+    } catch (error) {
+      if (error.code === 'E_VALIDATION_ERROR') {
+        return response.badRequest({ errors: error.messages })
+      }
+      return response.status(500).send({ message: 'Internal server error' })
+    }
   }
 
   public async update({ request, response, params }: HttpContext) {
-    const assignment = await Assignment.find(params.id)
-    if (!assignment) {
-      return response.notFound({ message: "Assignment wasn't found" })
+    try {
+      const assignment = await Assignment.find(params.id)
+      if (!assignment) {
+        return response.notFound({ message: "Assignment wasn't found" })
+      }
+      const payload = await updateAssignmentValidator.validate(request.all())
+      assignment.merge({
+        title: payload.title,
+        appointedDate: DateTime.fromJSDate(payload.appointedDate),
+      })
+      await assignment.save()
+      return response.ok(assignment)
+    } catch (error) {
+      if (error.code === 'E_VALIDATION_ERROR') {
+        return response.badRequest({ errors: error.messages })
+      }
+      return response.status(500).send({ message: 'Internal server error' })
     }
-    const data = request.only(['title', 'appointedDate'])
-    assignment.merge({
-      title: data.title,
-      appointedDate: data.appointedDate,
-    })
-    await assignment.save()
-    return response.ok(assignment)
   }
 
   public async destroy({ params, response }: HttpContext) {
-    const assignment = await Assignment.find(params.id)
-    if (!assignment) {
-      return response.notFound({ message: "Assignment wasn't found" })
+    try {
+      const assignment = await Assignment.find(params.id)
+      if (!assignment) {
+        return response.notFound({ message: "Assignment wasn't found" })
+      }
+      await assignment.delete()
+      return response.ok({ message: 'Assignment has been deleted' })
+    } catch {
+      return response.status(500).send({ message: 'Internal server error' })
     }
-    await assignment.delete()
-    return response.ok({ message: 'Assignment has been deleted' })
   }
 }

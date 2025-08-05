@@ -4,6 +4,6 @@ export interface UpdateAssignment {
 }
 
 export interface Assignment extends UpdateAssignment {
-  id: number;
+  id?: number;
   userId: number;
 }

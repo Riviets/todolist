@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { EditIcon } from "../assets/icons/edit";
-import EditModal from "./EditModal";
+import EditModal from "./EditTaskModal";
 import { useTask } from "./TaskCard/TaskContext";
 
-const EditBtn = () => {
+const EditTaskBtn = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const task = useTask();
 
@@ -22,4 +22,4 @@ const EditBtn = () => {
   );
 };
 
-export default EditBtn;
+export default EditTaskBtn;

@@ -12,7 +12,7 @@ type EditModalProps = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditModal = ({ task, setIsModalOpen }: EditModalProps) => {
+const EditTaskModal = ({ task, setIsModalOpen }: EditModalProps) => {
   const queryClient = useQueryClient();
 
   const {
@@ -80,4 +80,4 @@ const EditModal = ({ task, setIsModalOpen }: EditModalProps) => {
   );
 };
 
-export default EditModal;
+export default EditTaskModal;

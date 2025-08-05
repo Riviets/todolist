@@ -68,4 +68,13 @@ export default class AssignmentsController {
       return response.status(500).send({ message: 'Internal server error' })
     }
   }
+
+  public async getUserAssignments({ params, response }: HttpContext) {
+    const user = await User.find(params.id)
+    if (!user) {
+      return response.notFound({ message: 'User not found' })
+    }
+    const userAssignments = await Assignment.query().where('userId', params.id)
+    return response.ok(userAssignments)
+  }
 }

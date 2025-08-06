@@ -40,11 +40,11 @@ const Navigation = () => {
       <nav className="text-lg font-semibold hidden sm:flex justify-between  md:w-[120px] lg:w-[200px] gap-5">
         <div className="group relative">
           <Link to={"/"}>Tasks</Link>
-          <div className="underline" />
+          <div className="nav-underline" />
         </div>
         <div className="group relative">
           <Link to={"/dashboard"}>Dashboard</Link>
-          <div className="underline"></div>
+          <div className="nav-underline"></div>
         </div>
       </nav>
       <button

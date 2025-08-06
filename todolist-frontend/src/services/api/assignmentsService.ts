@@ -10,6 +10,10 @@ export const assignmentsService = {
     const response = await apiClient.get(`/users/${userID}/assignments`);
     return response.data;
   },
+  getUserAssignmentsForToday: async (userId: number) => {
+    const response = await apiClient.get(`users/${userId}/assignments/today`);
+    return response.data;
+  },
   createAssignment: async (assignmentData: Assignment) => {
     const response = await apiClient.post(`/assignments`, assignmentData);
     return response.data;

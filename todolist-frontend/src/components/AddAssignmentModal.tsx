@@ -73,7 +73,7 @@ const AddAssignmentModal = ({ closeFn }: AddAssignmentModalProps) => {
               {errors.appointedDate?.message}
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-end">
             <button className="btn">Confirm</button>
           </div>
         </form>

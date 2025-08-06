@@ -19,8 +19,10 @@ const UserAssignments = () => {
   });
   return (
     <>
-      <div className="flex justify-between items-center">
-        <p className="text-lg md:text-xl mb-4 md:mb-8">Your assignments:</p>
+      <div className="flex justify-between items-center mb-4">
+        <p className="text-lg md:text-xl font-medium ml-3">
+          All your assignments:
+        </p>
         <AddAssignmentBtn />
       </div>
       <div>
@@ -31,7 +33,7 @@ const UserAssignments = () => {
         ) : userAssignments?.length === 0 ? (
           <p>You don't have any assignments yet</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-[350px] overflow-y-auto p-3 shadow-md">
             {userAssignments?.map((assignment: Assignment) => (
               <AssignmentCard assignment={assignment} key={assignment.id} />
             ))}

@@ -70,11 +70,31 @@ export default class AssignmentsController {
   }
 
   public async getUserAssignments({ params, response }: HttpContext) {
-    const user = await User.find(params.id)
-    if (!user) {
-      return response.notFound({ message: 'User not found' })
+    try {
+      const user = await User.find(params.id)
+      if (!user) {
+        return response.notFound({ message: 'User not found' })
+      }
+      const userAssignments = await Assignment.query().where('userId', params.id)
+      return response.ok(userAssignments)
+    } catch {
+      return response.status(500).send({ message: 'Internal server error' })
     }
-    const userAssignments = await Assignment.query().where('userId', params.id)
-    return response.ok(userAssignments)
+  }
+
+  public async getUserAssignmentsForToday({ params, response }: HttpContext) {
+    try {
+      const user = await User.find(params.id)
+      if (!user) {
+        return response.notFound({ message: 'USer not found' })
+      }
+      const now = DateTime.local().startOf('day')
+      const userAssignmentsForToday = await Assignment.query()
+        .where('userId', user.id)
+        .where('appointedDate', now.toSQLDate())
+      return response.ok(userAssignmentsForToday)
+    } catch {
+      return response.status(500).send({ message: 'Internal server error' })
+    }
   }
 }

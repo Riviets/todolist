@@ -19,8 +19,8 @@ const UserAssignments = () => {
   });
   return (
     <>
-      <div className="flex justify-between">
-        <p>Your assignments:</p>
+      <div className="flex justify-between items-center">
+        <p className="text-lg md:text-xl mb-4 md:mb-8">Your assignments:</p>
         <AddAssignmentBtn />
       </div>
       <div>
@@ -31,9 +31,11 @@ const UserAssignments = () => {
         ) : userAssignments?.length === 0 ? (
           <p>You don't have any assignments yet</p>
         ) : (
-          userAssignments?.map((assignment: Assignment) => (
-            <AssignmentCard assignment={assignment} key={assignment.id} />
-          ))
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {userAssignments?.map((assignment: Assignment) => (
+              <AssignmentCard assignment={assignment} key={assignment.id} />
+            ))}
+          </div>
         )}
       </div>
     </>

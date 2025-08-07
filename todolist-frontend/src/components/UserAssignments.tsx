@@ -33,7 +33,7 @@ const UserAssignments = () => {
         ) : userAssignments?.length === 0 ? (
           <p>You don't have any assignments yet</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-[350px] overflow-y-auto p-3 shadow-md">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-[350px] overflow-y-auto p-4 shadow-md">
             {userAssignments?.map((assignment: Assignment) => (
               <AssignmentCard assignment={assignment} key={assignment.id} />
             ))}

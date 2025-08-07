@@ -15,9 +15,9 @@ const ConfirmModal = ({
 }: ConfirmModalProps) => {
   return (
     <div className="h-screen bg-black/70 fixed inset-0 flex-center z-10 px-10">
-      <div className="bg-white rounded-sm px-4 md:px-6 py-4 md:py-8 md:max-w-[450px]">
+      <div className="bg-white rounded-sm px-4 md:px-6 py-4 md:py-8 md:max-w-[400px]">
         <p className="font-semibold text-center mb-2 md:mb-4">{text}</p>
-        <div className="flex justify-around">
+        <div className="flex justify-around gap-2">
           <button
             onClick={onConfirm}
             className="cursor-pointer border-1 rounded-sm shadow-md px-3 text-lg hover:bg-zinc-200 transition-all duration-300"

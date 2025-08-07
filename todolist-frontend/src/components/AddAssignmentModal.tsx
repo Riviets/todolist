@@ -65,7 +65,7 @@ const AddAssignmentModal = ({ closeFn }: AddAssignmentModalProps) => {
             </label>
             <input
               {...register("appointedDate")}
-              type="text"
+              type="date"
               id="appointedDate"
               className="input"
             />
@@ -79,7 +79,7 @@ const AddAssignmentModal = ({ closeFn }: AddAssignmentModalProps) => {
         </form>
         <button
           onClick={closeFn}
-          className="absolute top-5 right-6 cursor-pointer"
+          className="absolute top-3 right-4 md:top-5 md:right-6 cursor-pointer"
         >
           <CloseIcon />
         </button>

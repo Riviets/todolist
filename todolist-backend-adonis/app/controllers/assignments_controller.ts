@@ -28,7 +28,7 @@ export default class AssignmentsController {
 
   public async store({ request, response }: HttpContext) {
     try {
-      const payload = await createAssignmentValidator.validate(request.all())
+      const payload = await request.validateUsing(createAssignmentValidator)
       const user = await User.find(payload.userId)
       if (!user) {
         return response.notFound({ message: 'User not found' })
@@ -53,7 +53,7 @@ export default class AssignmentsController {
       if (!assignment) {
         return response.notFound({ message: "Assignment wasn't found" })
       }
-      const payload = await updateAssignmentValidator.validate(request.all())
+      const payload = await request.validateUsing(updateAssignmentValidator)
       assignment.merge({
         title: payload.title,
         appointedDate: DateTime.fromJSDate(payload.appointedDate),

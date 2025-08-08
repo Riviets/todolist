@@ -1,4 +1,4 @@
-import apiClient from "./axiosInstance";
+import apiClient from "./adonisAxiosInstance";
 import type { TaskInput } from "../../types/task";
 
 export const tasksService = {

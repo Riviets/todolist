@@ -40,4 +40,12 @@ export default await Env.create(new URL('../', import.meta.url), {
   SMTP_PORT: Env.schema.number(),
   MAIL_USERNAME: Env.schema.string(),
   MAIL_PASSWORD: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring session package
+  |----------------------------------------------------------
+  */
+  SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+  JWT_SECRET: Env.schema.string(),
 })

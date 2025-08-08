@@ -13,7 +13,6 @@ const AddTaskForm = () => {
   const {
     register,
     handleSubmit,
-    setError,
     reset,
     formState: { errors },
   } = useForm<FormData>({
@@ -53,7 +52,12 @@ const AddTaskForm = () => {
           )}
         </div>
 
-        <button className="btn">Submit</button>
+        <button
+          disabled={createTaskMutation.isPending}
+          className={`btn ${createTaskMutation.isPending && "bg-zinc-200"}`}
+        >
+          {createTaskMutation.isPending ? "Hang on..." : "Submit"}
+        </button>
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import Todolist from "../components/Todolist";
+import Todolist from "../components/tasks/Todolist";
 
 const TodolistPage = () => {
   return (

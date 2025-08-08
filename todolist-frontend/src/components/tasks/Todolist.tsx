@@ -1,8 +1,8 @@
-import { tasksService } from "../services/api/tasksService";
+import { tasksService } from "../../services/api/tasksService";
 import { useQuery } from "@tanstack/react-query";
 import TasksList from "./TasksList";
-import AddTaskForm from "./forms/AddTaskForm";
-import Spinner from "./utils/Spinner";
+import AddTaskForm from "../forms/AddTaskForm";
+import Spinner from "../utils/Spinner";
 
 const Todolist = () => {
   const {

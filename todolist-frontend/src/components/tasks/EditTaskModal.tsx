@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Task } from "../types/task";
-import type { TaskInput } from "../types/task";
-import { inputSchema } from "../zod/schemas/inputSchema";
-import { CloseIcon } from "../assets/icons/close";
-import { tasksService } from "../services/api/tasksService";
+import type { Task } from "../../types/task";
+import type { TaskInput } from "../../types/task";
+import { inputSchema } from "../../zod/schemas/inputSchema";
+import { CloseIcon } from "../../assets/icons/close";
+import { tasksService } from "../../services/api/tasksService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type EditModalProps = {

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import AddAssignmentModal from "./ManageAssignmentModal";
-
+import ManageAssignmentModal from "./ManageAssignmentModal";
 const AddAssignmentBtn = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -13,7 +12,7 @@ const AddAssignmentBtn = () => {
         Add
       </button>
       {isAddModalOpen && (
-        <AddAssignmentModal
+        <ManageAssignmentModal
           mode="add"
           closeFn={() => setIsAddModalOpen(false)}
         />

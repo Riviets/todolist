@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { assignmentsService } from "../services/api/assignmentsService";
-import type { Assignment } from "../types/assignment";
+import { assignmentsService } from "../../services/api/assignmentsService";
+import type { Assignment } from "../../types/assignment";
 import AssignmentCard from "./AssignmentCard";
-import Spinner from "./utils/Spinner";
+import Spinner from "../utils/Spinner";
 import AddAssignmentBtn from "./AddAssignmentBtn";
-import { useCurrentUserId } from "../hooks/useCurrentUserId";
+import { useCurrentUserId } from "../../hooks/useCurrentUserId";
 
 const UserAssignments = () => {
   const { userId } = useCurrentUserId();

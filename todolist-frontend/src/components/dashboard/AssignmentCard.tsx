@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
-import type { Assignment } from "../types/assignment";
-import { assignmentCardColors } from "../constants/assignmentCardColors";
-import { EditIcon } from "../assets/icons/edit";
-import PushpinIcon from "../assets/icons/pushpin";
-import ConfirmModal from "./modals/ConfirmModal";
+import type { Assignment } from "../../types/assignment";
+import { assignmentCardColors } from "../../constants/assignmentCardColors";
+import { EditIcon } from "../../assets/icons/edit";
+import PushpinIcon from "../../assets/icons/pushpin";
+import ConfirmModal from "../modals/ConfirmModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { assignmentsService } from "../services/api/assignmentsService";
+import { assignmentsService } from "../../services/api/assignmentsService";
 import ManageAssignmentModal from "./ManageAssignmentModal";
 
 type AssignmentCardProps = {
@@ -16,6 +16,7 @@ type AssignmentCardProps = {
 const AssignmentCard = ({ assignment, className }: AssignmentCardProps) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
   const cardColors = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * assignmentCardColors.length);
     return assignmentCardColors[randomIndex];
@@ -36,7 +37,9 @@ const AssignmentCard = ({ assignment, className }: AssignmentCardProps) => {
       queryClient.invalidateQueries({ queryKey: ["userAssignmentsForToday"] });
       setIsConfirmModalOpen(false);
     },
+    onError: () => setIsError(true),
   });
+
   const finishAssignment = () => deleteAssignmentMutation.mutate();
 
   return (

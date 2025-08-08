@@ -1,19 +1,30 @@
-import { useCurrentUserId } from "../hooks/useCurrentUserId";
-import { assignmentsService } from "../services/api/assignmentsService";
-import type { Assignment } from "../types/assignment";
+import { useCurrentUserId } from "../../hooks/useCurrentUserId";
+import { assignmentsService } from "../../services/api/assignmentsService";
+import type { Assignment } from "../../types/assignment";
+import Spinner from "../utils/Spinner";
 import AssignmentCard from "./AssignmentCard";
 import { useQuery } from "@tanstack/react-query";
 
 const UserAssignmentsForToday = () => {
   const { userId } = useCurrentUserId();
-  const { data: assignmentsForToday } = useQuery({
+  const {
+    data: assignmentsForToday,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["userAssignmentsForToday"],
     queryFn: () => assignmentsService.getUserAssignmentsForToday(userId!),
     enabled: userId !== null,
   });
   return (
     <div>
-      {assignmentsForToday?.length === 0 ? (
+      {isLoading ? (
+        <div className="w-full">
+          <Spinner />
+        </div>
+      ) : isError ? (
+        <p className="text-red-500">Sorry, an error occured :(</p>
+      ) : assignmentsForToday?.length === 0 ? (
         <p className="text-lg md:text-xl font-medium ml-3 mb-4">
           You have no assignments for today
         </p>

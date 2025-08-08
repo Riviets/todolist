@@ -14,6 +14,7 @@ import { AxiosError } from "axios";
 const RegisterForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -27,6 +28,7 @@ const RegisterForm = () => {
 
   const onSubmit = async (data: UserRegisterData) => {
     try {
+      setIsLoading(true);
       await authService.registerUser(data);
       setIsSuccessModalVisible(true);
     } catch (error: any) {
@@ -42,6 +44,8 @@ const RegisterForm = () => {
           message: "Registration failed",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -106,7 +110,9 @@ const RegisterForm = () => {
         </div>
       </div>
 
-      <button className="btn md:max-w-[300px]">Submit</button>
+      <button className={`btn md:max-w-[300px] ${isLoading && "bg-zinc-200"}`}>
+        {isLoading ? "Hang on..." : "Submit"}
+      </button>
       <p>
         Already have an account?{" "}
         <Link to={"/login"} className="text-purple-800">

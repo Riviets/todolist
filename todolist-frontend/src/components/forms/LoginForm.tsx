@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -21,6 +22,7 @@ const LoginForm = () => {
 
   const onSubmit = async (data: UserLoginData) => {
     try {
+      setIsLoading(true);
       const user = await authService.loginUser(data);
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/");
@@ -29,6 +31,8 @@ const LoginForm = () => {
         type: "400",
         message: "Incorrect email or password!",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,7 +79,12 @@ const LoginForm = () => {
           {errors.password?.message || errors.root?.serverError.message || ""}
         </div>
       </div>
-      <button className="btn md:max-w-[300px]">Submit</button>
+      <button
+        disabled={isLoading}
+        className={`btn !w-[220px] ${isLoading && "bg-zinc-200"}`}
+      >
+        {isLoading ? "Hang on..." : "Submit"}
+      </button>
       <p>
         Don't have an account?{" "}
         <Link to={"/register"} className="text-purple-800">

@@ -3,7 +3,7 @@ import { tasksService } from "../../services/api/tasksService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TickIcon } from "../../assets/icons/tick";
 import { RemoveIcon } from "../../assets/icons/remove";
-import EditBtn from "../EditTaskBtn";
+import EditBtn from "../tasks/EditTaskBtn";
 import { TaskContext } from "./TaskContext";
 import { useState } from "react";
 import Modal from "../modals/Modal";

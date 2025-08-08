@@ -14,6 +14,18 @@ export default class AssignmentsController {
     }
   }
 
+  public async show({ params, response }: HttpContext) {
+    try {
+      const assignment = await Assignment.find(params.id)
+      if (!assignment) {
+        return response.notFound({ message: "Assignment with this id wasn't found" })
+      }
+      return response.ok(assignment)
+    } catch {
+      return response.status(500).send({ message: 'Internal server error' })
+    }
+  }
+
   public async store({ request, response }: HttpContext) {
     try {
       const payload = await createAssignmentValidator.validate(request.all())

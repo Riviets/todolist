@@ -1,20 +1,28 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { assignmentsService } from "../services/api/assignmentsService";
 import type { Assignment, UpdateAssignment } from "../types/assignment";
 import { useCurrentUserId } from "../hooks/useCurrentUserId";
 import addAssignmentSchema from "../zod/schemas/addAssignmentSchema";
 import { CloseIcon } from "../assets/icons/close";
+import { useEffect } from "react";
 
-type AddAssignmentModalProps = {
+type ManageAssignmentModalProps = {
+  mode: "add" | "edit";
+  assignmentId?: number;
   closeFn: () => void;
 };
 
-const AddAssignmentModal = ({ closeFn }: AddAssignmentModalProps) => {
+const ManageAssignmentModal = ({
+  mode,
+  assignmentId,
+  closeFn,
+}: ManageAssignmentModalProps) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(addAssignmentSchema),
@@ -22,29 +30,76 @@ const AddAssignmentModal = ({ closeFn }: AddAssignmentModalProps) => {
 
   const { userId } = useCurrentUserId();
 
+  const { data: assignmentData } = useQuery({
+    queryKey: ["assignment"],
+    queryFn: () => assignmentsService.getAssignmentById(assignmentId!),
+    enabled: mode === "edit" && assignmentId !== undefined,
+  });
+
+  useEffect(() => {
+    if (assignmentData) {
+      reset({
+        title: assignmentData.title,
+        appointedDate: assignmentData.appointedDate,
+      });
+    }
+  }, [assignmentData, reset]);
+
   const queryClient = useQueryClient();
   const addAssignmentMutation = useMutation({
     mutationFn: (data: Assignment) => assignmentsService.createAssignment(data),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["userAssignments"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userAssignments"] });
+      queryClient.invalidateQueries({ queryKey: ["userAssignmentsForToday"] });
+      closeFn();
+    },
   });
 
-  const onSubmit = (data: UpdateAssignment) => {
+  const editAssignmentMutation = useMutation({
+    mutationFn: ({
+      assignmentId,
+      data,
+    }: {
+      assignmentId: number;
+      data: UpdateAssignment;
+    }) => {
+      return assignmentsService.updateAssignment(assignmentId, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userAssignments"] });
+      queryClient.invalidateQueries({ queryKey: ["userAssignmentsForToday"] });
+      closeFn();
+    },
+  });
+
+  const onAddAssignment = (data: UpdateAssignment) => {
     if (!userId) return;
     addAssignmentMutation.mutate({
       userId: userId,
       title: data.title,
       appointedDate: data.appointedDate,
     });
-    closeFn();
   };
+
+  const onEditAssignment = (data: UpdateAssignment) => {
+    if (assignmentId) {
+      editAssignmentMutation.mutate({ assignmentId, data });
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/70 flex-center px-10">
+    <div className="fixed inset-0 bg-black/70 flex-center px-10 z-30">
       <div className="bg-white rounded-sm px-4 md:px-8 py-6 md:py-10 w-full max-w-[375px] relative">
         <p className="text-center text-xl md:text-2xl font-semibold mb-2 md:mb-4">
-          Add Assignment
+          {mode === "add" ? "Add Assignment" : "Edit Assignment"}
         </p>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          onSubmit={
+            mode === "add"
+              ? handleSubmit(onAddAssignment)
+              : handleSubmit(onEditAssignment)
+          }
+        >
           <div className="flex flex-col gap-1">
             <label htmlFor="title" className="text-lg tracking-wider">
               Title
@@ -88,4 +143,4 @@ const AddAssignmentModal = ({ closeFn }: AddAssignmentModalProps) => {
   );
 };
 
-export default AddAssignmentModal;
+export default ManageAssignmentModal;

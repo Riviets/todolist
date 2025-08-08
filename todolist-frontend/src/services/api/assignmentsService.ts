@@ -6,6 +6,10 @@ export const assignmentsService = {
     const response = await apiClient.get("/assignments");
     return response.data;
   },
+  getAssignmentById: async (id: number) => {
+    const response = await apiClient.get(`/assignments/${id}`);
+    return response.data;
+  },
   getUserAssignments: async (userID: number) => {
     const response = await apiClient.get(`/users/${userID}/assignments`);
     return response.data;

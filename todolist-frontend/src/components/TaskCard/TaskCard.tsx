@@ -3,7 +3,7 @@ import { tasksService } from "../../services/api/tasksService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TickIcon } from "../../assets/icons/tick";
 import { RemoveIcon } from "../../assets/icons/remove";
-import EditBtn from "../EditBtn";
+import EditBtn from "../tasks/EditTaskBtn";
 import { TaskContext } from "./TaskContext";
 import { useState } from "react";
 import Modal from "../modals/Modal";
@@ -38,7 +38,7 @@ const TaskCard = ({ task }: { task: Task }) => {
 
   return (
     <TaskContext value={task}>
-      <div className="flex py-2 md:py-4 px-4 md:px-6 items-center gap-2 md:gap-4 border-2 shadow-md border-gray-800 rounded-md w-full">
+      <div className="flex py-2 md:py-4 px-4 md:px-6 items-center gap-2 md:gap-4 border-2 shadow-md border-gray-800 rounded-md w-full bg-white">
         <div className="flex gap-2 mr-2">
           <button
             onClick={removeTask}

@@ -1,4 +1,4 @@
-import apiClient from "./axiosInstance";
+import apiClient from "./adonisAxiosInstance";
 import type { UserLoginData, UserRegisterData } from "../../types/user";
 
 export const authService = {

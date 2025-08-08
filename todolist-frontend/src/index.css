@@ -8,9 +8,12 @@
     @apply border-2 border-zinc-700 rounded-sm md:text-xl py-1 px-2 md:px-4;
   }
   .btn {
-    @apply border-2 border-zinc-700 rounded-sm py-1 text-base md:text-xl cursor-pointer w-full max-w-[200px] md:max-w-[260px] hover:bg-zinc-300 font-semibold transition-all duration-300;
+    @apply border-2 border-zinc-700 rounded-sm py-1 text-base md:text-xl cursor-pointer w-full max-w-[200px] md:max-w-[280px] hover:bg-zinc-200 font-semibold transition-all duration-300;
   }
   .bg-gradient {
     @apply bg-gradient-to-b from-zinc-950 to-zinc-800;
+  }
+  .nav-underline {
+    @apply absolute -bottom-0.5 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-300;
   }
 }

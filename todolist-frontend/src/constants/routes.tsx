@@ -6,6 +6,7 @@ import ProtectedRoute from "../components/utils/ProtectedRoute";
 import RegisterPage from "../pages/RegisterPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
+import DashboardPage from "../pages/DashboardPage";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <TodolistPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute>
+        <DashboardPage />
       </ProtectedRoute>
     ),
   },

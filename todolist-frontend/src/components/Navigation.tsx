@@ -58,7 +58,7 @@ const Navigation = () => {
       {isSidePanelOpen && (
         <div
           ref={sidePanelRef}
-          className="fixed inset-0 bg-black/90 sm:hidden items-start pt-20 pl-17 z-30"
+          className="fixed inset-0 bg-black/90 sm:hidden items-start pt-20 pl-17 z-50"
         >
           <button onClick={handleClosePanel} className="text-white">
             <div className="flex flex-col gap-2 items-start font-medium tracking-wider text-xl">

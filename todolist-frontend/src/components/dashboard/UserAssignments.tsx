@@ -49,7 +49,7 @@ const UserAssignments = () => {
         ) : userAssignments?.length === 0 ? (
           <p>You don't have any assignments yet</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 min-h-[240px] max-h-[320px] overflow-y-auto p-4 shadow-md">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 min-h-[190px] md:min-h-[240px] max-h-[320px] overflow-y-auto p-4 shadow-md">
             {filteredAssignmentsArray.length === 0 ? (
               <p className="text-lg text-zinc-700">
                 No results for this filter :(

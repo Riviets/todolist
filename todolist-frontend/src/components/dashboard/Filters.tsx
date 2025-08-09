@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FilterIcon from "../../assets/icons/filter";
 import type { filterProps } from "../../types/filters";
+import RadioButton from "../ui/RadioButton";
 
 const Filters = ({ filters, setFilters }: filterProps) => {
   const [filtersVisible, setFiltersVisible] = useState(false);
@@ -18,36 +19,24 @@ const Filters = ({ filters, setFilters }: filterProps) => {
         <div className="p-3 border-1 border-zinc-400 shadow-lg rounded-sm bg-white absolute top-12 -right-12 md:top-3 md:right-12 z-20">
           <form className="flex flex-col gap-5">
             <div className="space-y-1">
-              <div className="flex gap-2">
-                <input
-                  onChange={() => {
-                    setFilters((prev) => ({ ...prev, dueStatus: "overdue" }));
-                  }}
-                  type="radio"
-                  checked={filters.dueStatus === "overdue"}
-                  id="overdue"
-                  name="assignment-state"
-                  className="cursor-pointer"
-                />
-                <label htmlFor="overdue" className="cursor-pointer text-lg">
-                  Overdue
-                </label>
-              </div>
-              <div className="flex gap-2">
-                <input
-                  onChange={() => {
-                    setFilters((prev) => ({ ...prev, dueStatus: "future" }));
-                  }}
-                  type="radio"
-                  checked={filters.dueStatus === "future"}
-                  id="future"
-                  name="assignment-state"
-                  className="cursor-pointer"
-                />
-                <label htmlFor="future" className="cursor-pointer text-lg">
-                  Future
-                </label>
-              </div>
+              <RadioButton
+                label="Overdue"
+                id="overdue"
+                name="assignment-state"
+                onChange={() => {
+                  setFilters((prev) => ({ ...prev, dueStatus: "overdue" }));
+                }}
+                checked={filters.dueStatus === "overdue"}
+              />
+              <RadioButton
+                label="Future"
+                id="future"
+                name="assignment-state"
+                onChange={() => {
+                  setFilters((prev) => ({ ...prev, dueStatus: "future" }));
+                }}
+                checked={filters.dueStatus === "future"}
+              />
             </div>
             <input
               onChange={(e) =>

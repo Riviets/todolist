@@ -23,7 +23,7 @@ const AssignmentCard = ({ assignment, className }: AssignmentCardProps) => {
   }, []);
   const appointedDateString = new Date(
     assignment.appointedDate
-  ).toLocaleDateString("uk-UA", {
+  ).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",

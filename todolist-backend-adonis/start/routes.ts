@@ -1,4 +1,5 @@
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
 
 const AssignmentsController = () => import('#controllers/assignments_controller')
 const TasksController = () => import('#controllers/tasks_controller')
@@ -6,19 +7,33 @@ const AuthController = () => import('#controllers/auth_controller')
 const ResetPasswordController = () => import('#controllers/reset_password_controller')
 
 //Assignments
-router.get('/assignments', [AssignmentsController, 'index'])
-router.get('assignments/:id', [AssignmentsController, 'show'])
-router.get('/users/:id/assignments', [AssignmentsController, 'getUserAssignments'])
-router.get('users/:id/assignments/today', [AssignmentsController, 'getUserAssignmentsForToday'])
-router.post('/assignments', [AssignmentsController, 'store'])
-router.put('assignments/:id', [AssignmentsController, 'update'])
-router.delete('assignments/:id', [AssignmentsController, 'destroy'])
+router
+  .get('/assignments', [AssignmentsController, 'index'])
+  .use(middleware.auth({ guards: ['web'] }))
+router
+  .get('assignments/:id', [AssignmentsController, 'show'])
+  .use(middleware.auth({ guards: ['web'] }))
+router
+  .get('/users/:id/assignments', [AssignmentsController, 'getUserAssignments'])
+  .use(middleware.auth({ guards: ['web'] }))
+router
+  .get('users/:id/assignments/today', [AssignmentsController, 'getUserAssignmentsForToday'])
+  .use(middleware.auth({ guards: ['web'] }))
+router
+  .post('/assignments', [AssignmentsController, 'store'])
+  .use(middleware.auth({ guards: ['web'] }))
+router
+  .put('assignments/:id', [AssignmentsController, 'update'])
+  .use(middleware.auth({ guards: ['web'] }))
+router
+  .delete('assignments/:id', [AssignmentsController, 'destroy'])
+  .use(middleware.auth({ guards: ['web'] }))
 
 //Tasks
-router.get('/tasks', [TasksController, 'index'])
-router.post('/tasks', [TasksController, 'store'])
-router.put('/tasks/:id', [TasksController, 'update'])
-router.delete('/tasks/:id', [TasksController, 'destroy'])
+router.get('/tasks', [TasksController, 'index']).use(middleware.auth({ guards: ['web'] }))
+router.post('/tasks', [TasksController, 'store']).use(middleware.auth({ guards: ['web'] }))
+router.put('/tasks/:id', [TasksController, 'update']).use(middleware.auth({ guards: ['web'] }))
+router.delete('/tasks/:id', [TasksController, 'destroy']).use(middleware.auth({ guards: ['web'] }))
 
 //Auth
 router.post('/users', [AuthController, 'store'])

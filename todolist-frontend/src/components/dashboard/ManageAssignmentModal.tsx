@@ -7,6 +7,7 @@ import { useCurrentUserId } from "../../hooks/useCurrentUserId";
 import addAssignmentSchema from "../../zod/schemas/addAssignmentSchema";
 import { CloseIcon } from "../../assets/icons/close";
 import { useEffect } from "react";
+import ManageAssignmentsForm from "../forms/ManageAssignmentsForm";
 
 type ManageAssignmentModalProps = {
   mode: "add" | "edit";
@@ -103,11 +104,6 @@ const ManageAssignmentModal = ({
     }
   };
 
-  const isLoading =
-    mode === "add"
-      ? addAssignmentMutation.isPending
-      : editAssignmentMutation.isPending;
-
   return (
     <div className="fixed inset-0 bg-black/70 flex-center px-10 z-30">
       <div className="bg-white rounded-sm px-4 md:px-8 py-6 md:py-10 w-full max-w-[375px] relative">
@@ -119,50 +115,17 @@ const ManageAssignmentModal = ({
             Sorry, can't fetch the assignment data
           </p>
         ) : (
-          <form
-            onSubmit={
+          <ManageAssignmentsForm
+            mode={mode}
+            defaultValues={assignmentData}
+            onSubmit={mode === "add" ? onAddAssignment : onEditAssignment}
+            isLoading={
               mode === "add"
-                ? handleSubmit(onAddAssignment)
-                : handleSubmit(onEditAssignment)
+                ? addAssignmentMutation.isPending
+                : editAssignmentMutation.isPending
             }
-          >
-            <div className="flex flex-col gap-1">
-              <label htmlFor="title" className="text-lg tracking-wider">
-                Title
-              </label>
-              <input
-                {...register("title")}
-                type="text"
-                id="title"
-                className="input"
-              />
-              <div className="min-h-[1.5rem] text-red-500">
-                {errors.title?.message}
-              </div>
-            </div>
-            <div className="flex flex-col gap-1 mb-5">
-              <label htmlFor="appointedDate" className="text-lg tracking-wider">
-                Appointed date
-              </label>
-              <input
-                {...register("appointedDate")}
-                type="date"
-                id="appointedDate"
-                className="input"
-              />
-              <div className="min-h-[1.5rem] text-red-500">
-                {errors.appointedDate?.message || errors.root?.message}
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <button
-                disabled={isLoading}
-                className={`btn !w-[100px] ${isLoading && "bg-zinc-200"}`}
-              >
-                {isLoading ? "Hang on" : "Confirm"}
-              </button>
-            </div>
-          </form>
+            errors={errors}
+          />
         )}
         <button
           onClick={closeFn}

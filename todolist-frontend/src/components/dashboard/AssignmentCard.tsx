@@ -7,6 +7,7 @@ import ConfirmModal from "../modals/ConfirmModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { assignmentsService } from "../../services/api/assignmentsService";
 import ManageAssignmentModal from "./ManageAssignmentModal";
+import Modal from "../modals/Modal";
 
 type AssignmentCardProps = {
   assignment: Assignment;
@@ -16,14 +17,16 @@ type AssignmentCardProps = {
 const AssignmentCard = ({ assignment, className }: AssignmentCardProps) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [deletingError, setDeletingError] = useState(false);
+  const [isDeletingErrorModalVisible, setIsDeletingErrorModalVisible] =
+    useState(false);
   const cardColors = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * assignmentCardColors.length);
     return assignmentCardColors[randomIndex];
   }, []);
   const appointedDateString = new Date(
     assignment.appointedDate
-  ).toLocaleDateString("uk-UA", {
+  ).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -37,7 +40,7 @@ const AssignmentCard = ({ assignment, className }: AssignmentCardProps) => {
       queryClient.invalidateQueries({ queryKey: ["userAssignmentsForToday"] });
       setIsConfirmModalOpen(false);
     },
-    onError: () => setIsError(true),
+    onError: () => setDeletingError(true),
   });
 
   const finishAssignment = () => deleteAssignmentMutation.mutate();
@@ -83,6 +86,16 @@ const AssignmentCard = ({ assignment, className }: AssignmentCardProps) => {
           mode="edit"
           assignmentId={assignment.id}
           closeFn={() => setIsEditModalOpen(false)}
+        />
+      )}
+      {deletingError && (
+        <Modal
+          title="Error"
+          text="Error while deleting"
+          closeFunction={() => {
+            setDeletingError(false);
+            setIsDeletingErrorModalVisible(false);
+          }}
         />
       )}
     </>

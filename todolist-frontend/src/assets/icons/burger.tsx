@@ -10,9 +10,9 @@ export const BurgerIcon = () => {
       <path
         d="M1 1H19M1 7H19M1 13H19"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

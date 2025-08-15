@@ -1,0 +1,32 @@
+services:
+  database:
+    image: postgres:17
+    environment:
+      - POSTGRES_DB=todolist
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  backend:
+    image: riviets/todolist-backend:1.0
+    env_file:
+      - ./todolist-backend-adonis/.env
+    environment:
+      - DB_HOST=database
+      - HOST=0.0.0.0
+    ports:
+      - "3333:3333"
+    depends_on:
+      - database
+    command: sh -c "node ace migration:run && node ace serve --watch"
+
+  frontend:
+    image: riviets/todolist-frontend:1.0
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+volumes:
+  db-data:
